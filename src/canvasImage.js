@@ -2,10 +2,18 @@ import Pixel from "./pixel.js";
 import PositionXY from "./positionxy.js";
 
 export default class CanvasImage {
-    constructor(width, height) {
+    constructor(width, height, ctx) {
         this.width = width;
         this.height = height;
         this.pixels = Array(width * height);
+        this.ctx = ctx;
+    }
+
+    setColor(color) {
+        // console.log(color.r);
+        for(let i = 0; i < this.pixels.length; i++) {
+            this.pixels[i] = new Pixel(color.r, color.g, color.b, color.a, new PositionXY(i % this.width, Math.floor(i / this.height)));
+        }
     }
 
     addPixel(index, r,g,b,a) {
@@ -16,17 +24,30 @@ export default class CanvasImage {
         return this.pixels[index];
     }
 
-    multiply(inCol) {
-        this.pixels.forEach( (pixel) => {
-            let color = pixel.getColor();
-            pixel.setColor(
-                color.setR(color.r * inCol.r),
-                color.setR(color.g * inCol.g),
-                color.setR(color.b * inCol.b),
-            );
-        });
+    useAlpha(bool) {
+        if(!bool) {
+            this.pixels.forEach( (pixel) => {
+                let color = pixel.getColor();
+                color.setA(1);
+            });
+        }
     }
 
+    multiply(image) {
+        console.error("UNIMPLEMENTED METHOD");
+    }
+
+    mix(image) {
+        console.error("UNIMPLEMENTED METHOD");
+    }
+
+    add(image) {
+        console.error("UNIMPLEMENTED METHOD");
+    }
+
+    subtract(image) {
+        console.error("UNIMPLEMENTED METHOD");
+    }
 
     print() {
         this.pixels.forEach( (pixel) => {
@@ -35,11 +56,19 @@ export default class CanvasImage {
     }
 
     toImageData() {
-        let output = new Array(this.width * this.height * 4);
-        this.pixels.forEach( (pixel) => {
-            let col = pixel.getColor();
-            output.push(col.r,col.g,col.b,col.a);
-        });
+        let output = this.ctx.createImageData(this.width, this.height);
+
+        let j = 0;
+        for(let i = 0; i < this.pixels.length; i++) {
+            let col = this.pixels[i].getColor();
+            output.data[j + 0] = col.r;
+            output.data[j + 1] = col.g;
+            output.data[j + 2] = col.b;
+            output.data[j + 3] = col.a;
+            
+            j += 4;
+        }
+
         return output;
     }
 }

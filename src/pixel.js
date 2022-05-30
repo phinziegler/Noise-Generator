@@ -1,7 +1,7 @@
 import Color from "./color.js";
 
 export default class Pixel {
-    constructor(r,g,b,a=1, position) {
+    constructor(r,g,b,a=255, position) {
         this.color = new Color(r,g,b,a);
         this.position = position;
     }
@@ -15,13 +15,6 @@ export default class Pixel {
     }
 
     toJSON() {
-        return (
-            `
-            {
-                color: ${this.color.getRGBA()},
-                position: ${this.position.toString()}
-            }
-            `
-        );
+        return `{color: ${this.color.getRGBA()},position: ${this.position.toString()}}`;
     }
 }

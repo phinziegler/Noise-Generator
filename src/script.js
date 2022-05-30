@@ -1,4 +1,5 @@
 import CanvasImage from "./canvasImage.js";
+import Color from "./color.js";
 
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
@@ -28,8 +29,12 @@ function getCanvasData() {
     return newImage;
 }
 
-getCanvasData();
-
 function updateCanvas(imgData) {
-    ctx.putImageData(imgData, 0, 0);
+    ctx.putImageData(imgData, 0,0,0,0, width, height);
 }
+
+
+let red = new CanvasImage(width, height, ctx);
+red.setColor(new Color(255, 0, 0, 255));
+
+updateCanvas(red.toImageData());

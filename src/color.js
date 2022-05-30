@@ -1,9 +1,11 @@
+import Utils from "./utils.js";
+
 export default class Color {
-    constructor(r,g,b,a=1) {
-        this.r = r;
-        this.g = g;
-        this.b = b;
-        this.a = a;
+    constructor(r,g,b,a=255) {
+        this.r = Math.floor(Utils.clamp(r, 0, 255));
+        this.g = Math.floor(Utils.clamp(g, 0, 255));
+        this.b = Math.floor(Utils.clamp(b, 0, 255));
+        this.a = Math.floor(Utils.clamp(a, 0, 255));
     }
 
     setR(x) {
@@ -16,7 +18,26 @@ export default class Color {
         this.b = Math.floor(Utils.clamp(x, 0, 255));
     }
     setA(x) {
-        this.a = Utils.clamp(x, 0, 1);
+        this.a = Math.floor(Utils.clamp(x, 0, 255));
+    }
+
+    getR() {
+        return this.r;
+    }
+    getG() {
+        return this.g;
+    }
+    getB() {
+        return this.b;
+    }
+    getA() {
+        return this.a;
+    }
+
+    multiply(color) {
+        this.setR(this.r * (color.getR() / 255));
+        this.setG(this.g * (color.getG() / 255));
+        this.setB(this.b * (color.getB() / 255));
     }
 
     getRGBA() {
