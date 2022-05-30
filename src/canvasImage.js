@@ -1,6 +1,10 @@
 import Pixel from "./pixel.js";
 import PositionXY from "./positionxy.js";
 
+const MIX = "MIX";
+const ADD = "ADD";
+const MUL = "MUL";
+
 export default class CanvasImage {
     constructor(width, height, ctx) {
         this.width = width;
@@ -45,20 +49,29 @@ export default class CanvasImage {
         }
     }
 
-    multiply(image) {
-        console.error("UNIMPLEMENTED METHOD");
-    }
+    combine(image, method, fac=0.5) {
+        let output = new CanvasImage(this.width, this.height, this.ctx);
+        for(let i = 0; i < this.pixels.length; i++) {
+            let p1 = this.pixels[i];
+            let col1 = p1.getColor();
 
-    mix(image) {
-        console.error("UNIMPLEMENTED METHOD");
-    }
-
-    add(image) {
-        console.error("UNIMPLEMENTED METHOD");
-    }
-
-    subtract(image) {
-        console.error("UNIMPLEMENTED METHOD");
+            let p2 = image.getPixel(i);
+            let col2 = p2.getColor();
+             
+            let col3;
+            switch(method) {
+                case MIX:
+                    col3 = col1.mix(col2, fac);
+                    break;
+                case MUL:
+                    col3 = col1.multiply(col2, fac);
+                    break;
+                default:
+                    console.error(`No such combination method '${method}'`);
+            }
+            output.addPixel(i, col3.r,col3.g,col3.b,col3.a);
+        }
+        return output;
     }
 
     print() {

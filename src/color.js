@@ -8,6 +8,13 @@ export default class Color {
         this.a = Math.floor(Utils.clamp(a, 0, 255));
     }
 
+    setColor(col) {
+        this.r = col.r;
+        this.g = col.g;
+        this.b = col.b;
+        this.a = col.a;
+    }
+
     setR(x) {
         this.r = Math.floor(Utils.clamp(x, 0, 255));
     }
@@ -34,10 +41,23 @@ export default class Color {
         return this.a;
     }
 
-    multiply(color) {
-        this.setR(this.r * (color.getR() / 255));
-        this.setG(this.g * (color.getG() / 255));
-        this.setB(this.b * (color.getB() / 255));
+    multiply(color, fac=1) {
+        let newCol = new Color(
+            (this.r * (color.r / 255)),
+            (this.g * (color.g / 255)),
+            (this.b * (color.b / 255))
+        );
+        
+        return this.mix(newCol, fac);
+    }
+
+    mix(color, fac=0.5) {
+        let newCol = new Color(
+            (this.r * (1 - fac)) + (color.r * fac),
+            (this.g * (1 - fac)) + (color.g * fac),
+            (this.b * (1 - fac)) + (color.b * fac)    
+        )
+        return newCol;
     }
 
     getRGBA() {

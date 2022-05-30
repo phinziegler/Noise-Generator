@@ -1,6 +1,5 @@
 import CanvasImage from "./canvasImage.js";
 import Color from "./color.js";
-import PositionXY from "./positionxy.js";
 
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
@@ -37,4 +36,10 @@ function updateCanvas(imgData) {
 
 let red = new CanvasImage(width, height, ctx);
 red.setColor(new Color(255, 0, 0, 255));
-updateCanvas(red.toImageData());
+
+let blue = new CanvasImage(width, height, ctx);
+blue.setColor(new Color(0, 0, 255, 255));
+
+let purple = red.combine(blue, "MIX", 0.5);
+
+updateCanvas(purple.toImageData());
