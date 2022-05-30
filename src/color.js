@@ -28,19 +28,6 @@ export default class Color {
         this.a = Math.floor(Utils.clamp(x, 0, 255));
     }
 
-    getR() {
-        return this.r;
-    }
-    getG() {
-        return this.g;
-    }
-    getB() {
-        return this.b;
-    }
-    getA() {
-        return this.a;
-    }
-
     multiply(color, fac=1) {
         let newCol = new Color(
             (this.r * (color.r / 255)),
@@ -52,6 +39,7 @@ export default class Color {
     }
 
     mix(color, fac=0.5) {
+        let targetVal = (this.getValue() + color.getValue()) / 2;
         let newCol = new Color(
             (this.r * (1 - fac)) + (color.r * fac),
             (this.g * (1 - fac)) + (color.g * fac),
@@ -72,6 +60,6 @@ export default class Color {
     }
 
     getValue() {
-        return (r + g + b) / (3 * 255);
+        return Math.max(this.r,this.g,this.b);
     }
 }
