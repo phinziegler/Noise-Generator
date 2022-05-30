@@ -1,0 +1,26 @@
+@import 'mixin';
+@import 'colors';
+
+$main-font: Arial, Helvetica, sans-serif;
+
+* {
+    background-color: $bright;
+    color: $darker;
+    font-family: $main-font;
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+#header {
+    @include horizontal-center();
+    text-align: center;
+    // background-color: red;
+    width: fit-content;
+}
+
+#canvas {
+    @include horizontal-center();
+    background-color: white;
+    border: 1px solid $dark;
+}
