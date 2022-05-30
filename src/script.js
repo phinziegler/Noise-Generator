@@ -1,5 +1,6 @@
 import CanvasImage from "./canvasImage.js";
 import Color from "./color.js";
+import PositionXY from "./positionxy.js";
 
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
@@ -36,5 +37,4 @@ function updateCanvas(imgData) {
 
 let red = new CanvasImage(width, height, ctx);
 red.setColor(new Color(255, 0, 0, 255));
-
 updateCanvas(red.toImageData());

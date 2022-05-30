@@ -10,10 +10,22 @@ export default class CanvasImage {
     }
 
     setColor(color) {
-        // console.log(color.r);
         for(let i = 0; i < this.pixels.length; i++) {
             this.pixels[i] = new Pixel(color.r, color.g, color.b, color.a, new PositionXY(i % this.width, Math.floor(i / this.height)));
         }
+    }
+
+    getPixelFromPosition(pos) {
+        let index = (pos.y * this.width) + (pos.x % this.width);
+        return this.pixels[index];
+    }
+
+    colorPixel(pos, color) {
+        let pixel = this.getPixelFromPosition(pos);
+        console.log(pixel.toJSON());
+        pixel.setColor(color);
+        console.log(pixel.toJSON());
+
     }
 
     addPixel(index, r,g,b,a) {
