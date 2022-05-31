@@ -50,4 +50,12 @@ export default class Utils {
         let output = sum / i;
         return output;
     }
+
+    static lerp(a, b, t) {
+        return a + (t * (b - a));
+    }
+
+    static fade(t) {
+        return t * t * t * (t * (t * 6 - 15) + 10); 
+    }
 }

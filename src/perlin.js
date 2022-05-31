@@ -42,15 +42,11 @@ export default class Perlin {
         let ll_init = new Vector2(Utils.seedRandom(ll.toString() + "X" + this.seed, -1,1), Utils.seedRandom(ll.toString() + "Y" + this.seed, -1,1)).normalize();
         let lr_init = new Vector2(Utils.seedRandom(lr.toString() + "X" + this.seed, -1,1), Utils.seedRandom(lr.toString() + "Y" + this.seed, -1,1)).normalize();
 
-        // console.log(`FOR corner:${ul.toString()}, get ${ul_init.toString()}`);
-
         // Vectors from the 4 corners
         let ul_dif = posVec.subtract(ul.toVector().scale(this.scale));
         let ur_dif = posVec.subtract(ur.toVector().scale(this.scale));
         let ll_dif = posVec.subtract(ll.toVector().scale(this.scale));
         let lr_dif = posVec.subtract(lr.toVector().scale(this.scale));
-
-        // console.log(ul_dif.toString());
 
         // dot products
         let ul_dot = ul_init.dotProduct(ul_dif) / this.scale;
@@ -58,10 +54,14 @@ export default class Perlin {
         let ll_dot = ll_init.dotProduct(ll_dif) / this.scale;
         let lr_dot = lr_init.dotProduct(lr_dif) / this.scale;
 
-        // console.log(`Dot of ${lr_init.toString()} and ${lr_dif.toString()} is ${lr_dot}`);
-
         // interpolation
-        // ...
-        return Utils.average(ul_dot, ur_dot, ll_dot, lr_dot);
+        // https://adrianb.io/2014/08/09/perlinnoise.html
+        let u = Utils.fade((pos.x - (ul.x * this.scale)) / this.scale);
+        let v = Utils.fade((pos.y - (ul.y * this.scale)) / this.scale);
+
+        let x1 = Utils.lerp(ul_dot, ur_dot, u);
+        let x2 = Utils.lerp(ll_dot, lr_dot, u);
+        let avg = Utils.lerp(x1,x2,v);
+        return avg;
     }
 }
