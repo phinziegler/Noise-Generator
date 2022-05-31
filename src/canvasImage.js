@@ -1,3 +1,5 @@
+import Color from "./color.js";
+import Perlin from "./perlin.js";
 import Pixel from "./pixel.js";
 import PositionXY from "./positionxy.js";
 
@@ -15,13 +17,18 @@ export default class CanvasImage {
 
     setColor(color) {
         for(let i = 0; i < this.pixels.length; i++) {
-            this.pixels[i] = new Pixel(color.r, color.g, color.b, color.a, new PositionXY(i % this.width, Math.floor(i / this.height)));
+            this.pixels[i] = new Pixel(color.r, color.g, color.b, color.a, this.positionFromIndex(i));
         }
     }
 
     getPixelFromPosition(pos) {
         let index = (pos.y * this.width) + (pos.x % this.width);
         return this.pixels[index];
+    }
+
+
+    positionFromIndex(index) {
+        return new PositionXY(index % this.width, Math.floor(index / this.height));
     }
 
     colorPixel(pos, color) {
@@ -33,7 +40,7 @@ export default class CanvasImage {
     }
 
     addPixel(index, r,g,b,a) {
-        this.pixels[index] = new Pixel(r,g,b,a, new PositionXY(index % this.width, Math.floor(index / this.height)));
+        this.pixels[index] = new Pixel(r,g,b,a, this.positionFromIndex(index));
     }
 
     getPixel(index) {
@@ -95,5 +102,14 @@ export default class CanvasImage {
         }
 
         return output;
+    }
+
+    createNoise(scale, seed, x, y) {
+        let p = new Perlin(scale, seed, x, y);
+        for(let i = 0; i < this.pixels.length; i++) {
+            let value = p.perlin(this.positionFromIndex(i));
+            let val = ((value + 1) / 2) * 255;
+            this.pixels[i] = new Pixel(val,val,val,255, this.positionFromIndex(i));
+        }
     }
 }

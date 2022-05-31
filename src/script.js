@@ -1,5 +1,7 @@
 import CanvasImage from "./canvasImage.js";
 import Color from "./color.js";
+import Perlin from "./perlin.js";
+import Utils from "./utils.js";
 
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
@@ -33,13 +35,7 @@ function updateCanvas(imgData) {
     ctx.putImageData(imgData, 0,0,0,0, width, height);
 }
 
+let noise1 = new CanvasImage(width, height, ctx);
+noise1.createNoise( 20, "something random", 0, 0);
 
-let red = new CanvasImage(width, height, ctx);
-red.setColor(new Color(255, 0, 0, 255));
-
-let blue = new CanvasImage(width, height, ctx);
-blue.setColor(new Color(0, 0, 255, 255));
-
-let purple = red.combine(blue, "MIX", 0.5);
-
-updateCanvas(purple.toImageData());
+updateCanvas(noise1.toImageData());

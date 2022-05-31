@@ -14,6 +14,10 @@ export default class Pixel {
         return this.color;
     }
 
+    getPosition() {
+        return this.position;
+    }
+
     toJSON() {
         return `{color: ${this.color.getRGBA()},position: ${this.position.toString()}}`;
     }

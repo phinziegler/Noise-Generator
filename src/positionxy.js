@@ -1,3 +1,5 @@
+import Vector2 from "./vector2.js";
+
 export default class PositionXY {
     constructor(x,y) {
         this.x = x;
@@ -10,5 +12,9 @@ export default class PositionXY {
 
     toString() {
         return `(${this.x}, ${this.y})`
+    }
+
+    toVector() {
+        return new Vector2(this.x, this.y);
     }
 }

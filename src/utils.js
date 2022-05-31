@@ -39,4 +39,15 @@ export default class Utils {
 
         return rand() * (hi - lo) + lo;
     }
+
+    static average(...args) {
+        let sum = 0;
+        let i = 0;
+        args.forEach(element => {
+            i++;
+            sum += element;
+        });
+        let output = sum / i;
+        return output;
+    }
 }

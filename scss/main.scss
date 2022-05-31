@@ -22,5 +22,5 @@ $main-font: Arial, Helvetica, sans-serif;
 #canvas {
     @include horizontal-center();
     background-color: white;
-    border: 1px solid $dark;
+    // border: 1px solid $dark;
 }
